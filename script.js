@@ -89,7 +89,7 @@ function setMode(mode) {
     }
     currentMode = mode;
     timeLeft = MODES[mode].duration;
-    modeLabel.textContent = mode;
+    modeLabel.textContent = MODES[mode].label;
 }
 
 
