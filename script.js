@@ -1,6 +1,8 @@
 const timer = document.getElementById("timer");
 const timerToggleBtn = document.getElementById("timer-toggle");
 const modeLabel = document.getElementById("mode-label");
+const clickSound = document.getElementById("click-sound");
+const alarmSound = document.getElementById("alarm-sound")
 const MODES = {
     pomodoro: {
         label: "Pomodoro",
@@ -30,6 +32,8 @@ function updateTimerDisplay(timeLeft) {
 }
 
 function toggleTimer() {
+    clickSound.currentTime = 0;
+    clickSound.play();
     if (isRunning) {
         timerToggleBtn.textContent = "Start";
         pauseTimer();
@@ -52,7 +56,6 @@ function timerTick() {
             updateTimerDisplay(timeLeft);
         } else {
             handleEndTimer();
-            updateTimerDisplay(timeLeft);
         }
     }, 1000);
 }
@@ -60,9 +63,11 @@ function timerTick() {
 function handleEndTimer() {
     clearInterval(interval);
     isRunning = false;
-    timerToggleBtn.textContent = 'start'
-    alert("Time's up!");
-    modeCycler()
+    timerToggleBtn.textContent = 'start';
+    modeCycler();
+    updateTimerDisplay(timeLeft);
+    alarmSound.currentTime = 0;
+    alarmSound.play();
 }
 
 function modeCycler() {
@@ -90,9 +95,9 @@ function setMode(mode) {
 
 timerToggleBtn.addEventListener("click", toggleTimer);
 document.addEventListener("keydown", (e) => {
-    console.log("key down")
     if (e.code === "Space") {
         event.preventDefault()
+        alarmSound.pause()
         toggleTimer()
     }
 })
