@@ -51,13 +51,18 @@ function timerTick() {
             timeLeft--;
             updateTimerDisplay(timeLeft);
         } else {
-            clearInterval(interval);
-            isRunning = false;
-            timerToggleBtn.textContent = 'start'
-            alert("Time's up!");
-            modeCycler()
+            handleEndTimer();
+            updateTimerDisplay(timeLeft);
         }
     }, 1000);
+}
+
+function handleEndTimer() {
+    clearInterval(interval);
+    isRunning = false;
+    timerToggleBtn.textContent = 'start'
+    alert("Time's up!");
+    modeCycler()
 }
 
 function modeCycler() {
@@ -80,7 +85,6 @@ function setMode(mode) {
     currentMode = mode;
     timeLeft = MODES[mode].duration;
     modeLabel.textContent = mode;
-    updateTimerDisplay(timeLeft)
 }
 
 
