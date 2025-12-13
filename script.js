@@ -2,32 +2,56 @@ const timer = document.getElementById("timer");
 const timerToggleBtn = document.getElementById("timer-toggle");
 const modeLabel = document.getElementById("mode-label");
 const clickSound = document.getElementById("click-sound");
-const alarmSound = document.getElementById("alarm-sound")
+const alarmSound = document.getElementById("alarm-sound");
+const historyList = document.getElementById("history-list");
+const historyHeader = document.getElementById("history-header");
+const historyArray = [];
+// const MODES = {
+//     pomodoro: {
+//         label: "Pomodoro",
+//         duration: 25 * 60,
+//         accent: "#E85D60",
+//         accentSoft: "#FFEBE9",
+//         pageBg: "#DB2955"
+//     },
+//     shortBreak: {
+//         label: "Short Break",
+//         duration: 5 * 60,
+//         accent: "#4ABDAC",
+//         accentSoft: "#DFF6F0",
+//         pageBg: "#7FB285"
+//     },
+//     longBreak: {
+//         label: "Long Break",
+//         duration: 15 * 60,
+//         accent: "#5995FF",
+//         accentSoft: "#DDE9FB",
+//         pageBg: "#5BC0EB"
+//     }
+// };
 const MODES = {
     pomodoro: {
         label: "Pomodoro",
-        duration: 25 * 60,
+        duration: 1,
         accent: "#E85D60",
         accentSoft: "#FFEBE9",
         pageBg: "#DB2955"
     },
     shortBreak: {
         label: "Short Break",
-        duration: 5 * 60,
+        duration: 1,
         accent: "#4ABDAC",
         accentSoft: "#DFF6F0",
         pageBg: "#7FB285"
     },
     longBreak: {
         label: "Long Break",
-        duration: 15 * 60,
+        duration: 1,
         accent: "#5995FF",
         accentSoft: "#DDE9FB",
         pageBg: "#5BC0EB"
     }
 };
-
-
 
 let cycles = 0
 let interval = null;
@@ -72,19 +96,22 @@ function timerTick() {
 }
 
 function handleEndTimer() {
+    addToHistory(MODES[currentMode].label, MODES[currentMode].duration)
     clearInterval(interval);
     isRunning = false;
     timerToggleBtn.textContent = 'start';
-    modeCycler();
-    updateTimerDisplay(timeLeft);
     alarmSound.currentTime = 0;
     alarmSound.play();
+    modeCycler();
+    displayhistory();
+    updateTimerDisplay(timeLeft);
+
 }
 
 function modeCycler() {
     if (currentMode === 'pomodoro') {
         cycles++;
-        if (cycles % 4 === 0) {
+        if (cycles % 1 === 0) {
             setMode("longBreak")
         } else {
             setMode("shortBreak")
@@ -127,5 +154,32 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
+function addToHistory(mode, duration) {
+    historyArray.push({
+        mode: mode,
+        duration: duration,
+        timestamp: Date.now()
+    })
+}
+
+function displayhistory() {
+    historyList.innerHTML = '';
+    historyHeader.textContent = historyArray.length === 0 ? 'No History' : 'History';
+    historyArray.forEach((record) => {
+        const li = document.createElement('li');
+        const { mode, duration, timestamp } = record;
+        const date = new Date(timestamp);
+        const formatted = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+
+        li.textContent = `${mode} - ${duration} mins - ${formatted}`;
+        li.classList.add('history-item')
+
+        historyList.appendChild(li);
+    })
+}
+
+
 setMode(currentMode);
+displayhistory();
 updateTimerDisplay(timeLeft);
+formatTimeStamp(Date.now())
