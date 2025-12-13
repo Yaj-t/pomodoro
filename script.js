@@ -6,17 +6,28 @@ const alarmSound = document.getElementById("alarm-sound")
 const MODES = {
     pomodoro: {
         label: "Pomodoro",
-        duration: 25 * 60
+        duration: 25 * 60,
+        accent: "#E85D60",
+        accentSoft: "#FFEBE9",
+        pageBg: "#DB2955"
     },
     shortBreak: {
         label: "Short Break",
-        duration: 5 * 60
+        duration: 5 * 60,
+        accent: "#4ABDAC",
+        accentSoft: "#DFF6F0",
+        pageBg: "#7FB285"
     },
     longBreak: {
         label: "Long Break",
-        duration: 15 * 60
+        duration: 15 * 60,
+        accent: "#5995FF",
+        accentSoft: "#DDE9FB",
+        pageBg: "#5BC0EB"
     }
-}
+};
+
+
 
 let cycles = 0
 let interval = null;
@@ -84,12 +95,26 @@ function modeCycler() {
 }
 
 function setMode(mode) {
-    if (!MODES[mode]) {
-        return
-    }
+    if (!MODES[mode]) return
+
     currentMode = mode;
     timeLeft = MODES[mode].duration;
     modeLabel.textContent = MODES[mode].label;
+
+    document.documentElement.style.setProperty(
+        "--accent",
+        MODES[mode].accent
+    );
+
+    document.documentElement.style.setProperty(
+        "--accent-soft",
+        MODES[mode].accentSoft
+    );
+
+    document.documentElement.style.setProperty(
+        "--page-background",
+        MODES[mode].pageBg
+    )
 }
 
 
@@ -102,4 +127,5 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
+setMode(currentMode);
 updateTimerDisplay(timeLeft);
