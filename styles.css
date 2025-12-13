@@ -67,6 +67,7 @@ h1 {
     font-weight: 600;
     margin-bottom: var(--space-lg);
     letter-spacing: 2px;
+    font-family: Arial;
 }
 
 .controls button {
