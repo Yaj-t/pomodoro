@@ -39,10 +39,8 @@ body {
     background-color: var(--background);
     color: var(--text-primary);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: var(--space-lg);
+    padding-top: 10vh;
 }
 
 .container {
@@ -96,4 +94,20 @@ h1 {
 
 #history {
     margin-top: var(--space-lg);
+}
+
+.dashboard {
+    width: 100%;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
 }

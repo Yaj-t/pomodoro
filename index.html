@@ -9,15 +9,20 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 id="mode-label">Pomodoro</h1>
-        <div id="timer">25:00</div>
-        <div class="controls">
-            <button id="timer-toggle">
-                Start
-            </button>
-        </div>
-    </div>
+    <main class="dashboard">
+        <section class="container pomodoro">
+            <h1 id="mode-label">Pomodoro</h1>
+            <div id="timer">25:00</div>
+            <div class="controls">
+                <button id="timer-toggle">Start</button>
+            </div>
+        </section>
+
+        <section id="history" class="container history">
+            <h1>History</h1>
+        </section>
+    </main>
+
     <audio id="click-sound" src="sounds/click.mp3"></audio>
     <audio id="alarm-sound" src="sounds/alarm.mp3"></audio>
     <script src="script.js"></script>
