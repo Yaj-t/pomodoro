@@ -6,52 +6,30 @@ const alarmSound = document.getElementById("alarm-sound");
 const historyList = document.getElementById("history-list");
 const historyHeader = document.getElementById("history-header");
 const historyArray = [];
-// const MODES = {
-//     pomodoro: {
-//         label: "Pomodoro",
-//         duration: 25 * 60,
-//         accent: "#E85D60",
-//         accentSoft: "#FFEBE9",
-//         pageBg: "#DB2955"
-//     },
-//     shortBreak: {
-//         label: "Short Break",
-//         duration: 5 * 60,
-//         accent: "#4ABDAC",
-//         accentSoft: "#DFF6F0",
-//         pageBg: "#7FB285"
-//     },
-//     longBreak: {
-//         label: "Long Break",
-//         duration: 15 * 60,
-//         accent: "#5995FF",
-//         accentSoft: "#DDE9FB",
-//         pageBg: "#5BC0EB"
-//     }
-// };
 const MODES = {
     pomodoro: {
         label: "Pomodoro",
-        duration: 1,
+        duration: 25 * 60,
         accent: "#E85D60",
         accentSoft: "#FFEBE9",
         pageBg: "#DB2955"
     },
     shortBreak: {
         label: "Short Break",
-        duration: 1,
+        duration: 5 * 60,
         accent: "#4ABDAC",
         accentSoft: "#DFF6F0",
         pageBg: "#7FB285"
     },
     longBreak: {
         label: "Long Break",
-        duration: 1,
+        duration: 10 * 60,
         accent: "#5995FF",
         accentSoft: "#DDE9FB",
         pageBg: "#5BC0EB"
     }
 };
+
 
 let cycles = 0
 let interval = null;
