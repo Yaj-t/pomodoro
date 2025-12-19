@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomodoro</title>
+    <title>Modern Pomodoro</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -12,7 +12,17 @@
     <main class="dashboard">
         <section class="container pomodoro">
             <h1 id="mode-label">Pomodoro</h1>
-            <div id="timer">25:00</div>
+
+            <div class="timer-wrapper">
+                <svg class="progress-ring" width="300" height="300">
+                    <circle class="progress-ring__background" stroke="rgba(255,255,255,0.05)" stroke-width="8"
+                        fill="transparent" r="140" cx="150" cy="150" />
+                    <circle id="progress-bar" class="progress-ring__circle" stroke="var(--accent)" stroke-width="8"
+                        stroke-linecap="round" fill="transparent" r="140" cx="150" cy="150" />
+                </svg>
+                <div id="timer">25:00</div>
+            </div>
+
             <div class="controls">
                 <button id="timer-toggle">Start</button>
             </div>
@@ -20,9 +30,7 @@
 
         <section id="history" class="container history">
             <h1 id="history-header">History</h1>
-            <ul id="history-list">
-            </ul>
-
+            <ul id="history-list"></ul>
         </section>
     </main>
 

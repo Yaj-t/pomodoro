@@ -1,178 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+    --accent: #e85d75;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --surface: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Inter', system-ui, sans-serif;
+    --radius-lg: 32px;
+    --radius-md: 16px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    /* Colors */
-    --accent: #e85d75;
-    /* Pomodoro default */
-    --accent-soft: #fff1f3;
-    --text-primary: #1f2933;
-    --text-secondary: #6b7280;
-    --surface: #ffffff;
-    --background: #f5f6f8;
-    --page-background: #f5f6f8;
-
-    /* Typography */
-    --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-    /* Spacing */
-    --space-xs: 0.5rem;
-    --space-sm: 0.75rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-
-    /* Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-
-    /* Shadow */
-    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
 body {
     font-family: var(--font-main);
-    background-color: var(--page-background);
-    transition: background-color 0.6s ease;
+    background: radial-gradient(circle at top left, #1e293b, #0f172a);
     color: var(--text-primary);
     min-height: 100vh;
-    padding: var(--space-lg);
-    padding-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
 }
-
-.container {
-    background-color: var(--surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
-    padding: var(--space-md);
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: var(--space-md);
-    letter-spacing: 0.5px;
-}
-
-#timer {
-    font-size: 5rem;
-    font-weight: 600;
-    margin-bottom: var(--space-lg);
-    letter-spacing: 2px;
-    font-family: Arial;
-}
-
-.controls button {
-    appearance: none;
-    border: none;
-    border-radius: var(--radius-md);
-    background-color: var(--accent);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        opacity 0.12s ease;
-}
-
-.controls button:hover {
-    opacity: 0.95;
-}
-
-.controls button:active {
-    transform: scale(0.96);
-}
-
-/* #history {
-    margin-top: var(--space-lg);
-} */
 
 .dashboard {
     width: 100%;
-    max-width: 960px;
+    max-width: 1000px;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    margin: 0 auto;
-    padding: 0 var(--space-md);
-    /* ✅ add horizontal padding */
-    margin: 0 auto;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
 }
 
-.pomodoro,
+.container {
+    background: var(--surface);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Timer & Progress Ring */
+.timer-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+#timer {
+    font-size: 5.5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    position: absolute;
+    z-index: 2;
+}
+
+.progress-ring__circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+/* Controls */
+#mode-label {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.controls button {
+    background: linear-gradient(135deg, var(--accent), #ff8e91);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 20px -5px rgba(232, 93, 117, 0.4);
+}
+
+.controls button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* History styling */
 .history {
-    background: var(--accent-soft)
-}
-
-
-@media (min-width: 768px) {
-    .dashboard {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-    }
-}
-
-/* ===========================
-   HISTORY STYLING
-=========================== */
-
-#history {
+    max-height: 550px;
     display: flex;
     flex-direction: column;
 }
 
-#history h1 {
-    font-size: 1.5rem;
-    margin-bottom: var(--space-md);
+#history-header {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
 #history-list {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    max-height: 300px;
-    /* optional, makes scrollable if too many items */
     overflow-y: auto;
-    padding-right: 4px;
-    /* small padding for scrollbar */
+    padding-right: 10px;
 }
 
 .history-item {
-    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    background-color: #f9f9f9;
-    color: var(--text-primary);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background 0.3s;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-/* Scrollbar styling (optional, modern) */
-#history-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-#history-list::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-}
-
-#history-list::-webkit-scrollbar-track {
-    background: transparent;
+@media (max-width: 850px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
 }

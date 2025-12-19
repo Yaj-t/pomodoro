@@ -1,7 +1,24 @@
 /* ================================
-   CONSTANTS & STORAGE HELPERS
+   DOM ELEMENTS
 ================================ */
 
+const dom = {
+    timer: document.getElementById("timer"),
+    toggle: document.getElementById("timer-toggle"),
+    modeLabel: document.getElementById("mode-label"),
+    historyList: document.getElementById("history-list"),
+    historyHeader: document.getElementById("history-header"),
+    clickSound: document.getElementById("click-sound"),
+    alarmSound: document.getElementById("alarm-sound"),
+    circle: document.getElementById('progress-bar'),
+};
+/* ================================ 
+   CONSTANTS & STORAGE HELPERS
+================================ */
+const radius = dom.circle.r.baseVal.value;
+const circumference = radius * 2 * Math.PI;
+dom.circle.style.strokeDasharray = `${circumference} ${circumference}`;
+dom.circle.style.strokeDashoffset = circumference;
 const STORAGE_KEYS = {
     TIMER: "timerData",
     HISTORY: "history",
@@ -11,7 +28,7 @@ const STORAGE_KEYS = {
 const DEFAULT_MODES = {
     pomodoro: {
         label: "Pomodoro",
-        duration: 25 * 60,
+        duration: 1,
         theme: {
             accent: "#E85D60",
             accentSoft: "#FFEBE9",
@@ -20,7 +37,7 @@ const DEFAULT_MODES = {
     },
     shortBreak: {
         label: "Short Break",
-        duration: 5 * 60,
+        duration: 1,
         theme: {
             accent: "#4ABDAC",
             accentSoft: "#DFF6F0",
@@ -29,7 +46,7 @@ const DEFAULT_MODES = {
     },
     longBreak: {
         label: "Long Break",
-        duration: 10 * 60,
+        duration: 1,
         theme: {
             accent: "#5995FF",
             accentSoft: "#DDE9FB",
@@ -63,20 +80,6 @@ const state = {
         isRunning: false
     }),
     intervalId: null
-};
-
-/* ================================
-   DOM ELEMENTS
-================================ */
-
-const dom = {
-    timer: document.getElementById("timer"),
-    toggle: document.getElementById("timer-toggle"),
-    modeLabel: document.getElementById("mode-label"),
-    historyList: document.getElementById("history-list"),
-    historyHeader: document.getElementById("history-header"),
-    clickSound: document.getElementById("click-sound"),
-    alarmSound: document.getElementById("alarm-sound")
 };
 
 /* ================================
@@ -135,7 +138,7 @@ function completeTimer() {
 
     const currentMode = state.modes[state.timer.mode];
 
-    state.history.push({
+    state.history.unshift({
         mode: currentMode.label,
         duration: currentMode.duration,
         timestamp: Date.now()
@@ -160,8 +163,11 @@ function completeTimer() {
 function renderTimer() {
     const minutes = Math.floor(state.timer.timeLeft / 60);
     const seconds = state.timer.timeLeft % 60;
-
     dom.timer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    const totalTime = state.modes[state.timer.mode].duration;
+    const percentage = (state.timer.timeLeft / totalTime) * 100;
+    setProgress(percentage);
 }
 
 function renderMode() {
@@ -169,8 +175,7 @@ function renderMode() {
     dom.modeLabel.textContent = mode.label;
 
     document.documentElement.style.setProperty("--accent", mode.theme.accent);
-    document.documentElement.style.setProperty("--accent-soft", mode.theme.accentSoft);
-    document.documentElement.style.setProperty("--page-background", mode.theme.pageBackground);
+    dom.circle.style.stroke = mode.theme.accent;
 }
 
 function renderHistory() {
@@ -183,6 +188,11 @@ function renderHistory() {
         li.textContent = `${mode} - ${duration >= 60 ? duration / 60 : duration} ${duration >= 60 ? "mins" : "seconds"} - ${new Date(timestamp).toLocaleString()}`;
         dom.historyList.appendChild(li);
     });
+}
+
+function setProgress(percent) {
+    const offset = circumference - (percent / 100) * circumference;
+    dom.circle.style.strokeDashoffset = offset;
 }
 
 function render() {
@@ -204,6 +214,8 @@ dom.toggle.addEventListener("click", () => {
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
+        dom.clickSound.currentTime = 0;
+        dom.clickSound.play();
         e.preventDefault();
         state.timer.isRunning ? pauseTimer() : startTimer();
     }
