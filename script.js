@@ -60,7 +60,8 @@ const dom = {
     historyHeader: document.getElementById("history-header"),
     clearHistoryBtn: document.getElementById("clear-history"),
     clickSound: document.getElementById("click-sound"),
-    alarmSound: document.getElementById("alarm-sound")
+    alarmSound: document.getElementById("alarm-sound"),
+    skipBtn: document.getElementById("skip-btn"),
 };
 
 /* ================================
@@ -116,7 +117,7 @@ function completeTimer() {
 
     state.history.unshift({
         mode: currentMode.label,
-        duration: currentMode.duration,
+        duration: currentMode.duration - state.timer.timeLeft,
         timestamp: Date.now()
     });
 
@@ -214,6 +215,11 @@ dom.historyList.addEventListener("click", (e) => {
         deleteHistoryItem(index);
     }
 });
+
+dom.skipBtn.addEventListener("click", (e) => {
+    if (dom.clickSound) dom.clickSound.play();
+    completeTimer();
+})
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {

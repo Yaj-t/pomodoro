@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modern Pomodoro</title>
+    <title>My Pomodoro</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -24,7 +24,17 @@
             </div>
 
             <div class="controls">
-                <button id="timer-toggle">Start</button>
+                <div class="button-group">
+                    <div class="spacer"></div> <button id="timer-toggle">Start</button>
+
+                    <button id="skip-btn" class="btn-skip" title="Skip Session">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 4l10 8-10 8V4z"></path>
+                            <line x1="19" y1="5" x2="19" y2="19"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </section>
 
