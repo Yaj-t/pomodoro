@@ -1,16 +1,31 @@
+/* MODERN POMODORO STYLES 
+    Theme: Glassmorphism / Dark Mode
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
 :root {
+    /* Colors */
     --accent: #e85d75;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --surface: rgba(255, 255, 255, 0.04);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --font-main: 'Inter', system-ui, sans-serif;
-    --radius-lg: 32px;
+
+    /* Typography */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Spacing & Radius */
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 3rem;
+    --radius-sm: 8px;
     --radius-md: 16px;
+    --radius-lg: 32px;
 }
 
+/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -26,34 +41,48 @@ body {
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    transition: background 0.6s ease;
 }
 
+/* Main Layout */
 .dashboard {
     width: 100%;
     max-width: 1000px;
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     gap: 2rem;
+    margin: 0 auto;
 }
 
+/* Base Container / Glass Card */
 .container {
     background: var(--surface);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: 3rem 2rem;
+    padding: var(--space-xl) var(--space-lg);
     text-align: center;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* Timer & Progress Ring */
+/* Timer Section */
+#mode-label {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
 .timer-wrapper {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 2.5rem 0;
 }
 
 #timer {
@@ -62,31 +91,27 @@ body {
     font-variant-numeric: tabular-nums;
     position: absolute;
     z-index: 2;
+    letter-spacing: -2px;
 }
 
+/* Progress Ring SVG */
 .progress-ring__circle {
-    transition: stroke-dashoffset 0.35s;
+    transition: stroke-dashoffset 0.35s, stroke 0.3s ease;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
 }
 
-/* Controls */
-#mode-label {
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 1rem;
-    color: var(--accent);
-    margin-bottom: 1rem;
-}
-
+/* Main Control Button */
 .controls button {
     background: linear-gradient(135deg, var(--accent), #ff8e91);
     color: white;
     border: none;
-    padding: 1rem 3rem;
+    padding: 1rem 3.5rem;
     border-radius: var(--radius-md);
     font-size: 1.1rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 10px 20px -5px rgba(232, 93, 117, 0.4);
@@ -95,40 +120,139 @@ body {
 .controls button:hover {
     transform: translateY(-2px);
     filter: brightness(1.1);
+    box-shadow: 0 15px 25px -5px rgba(232, 93, 117, 0.5);
 }
 
-/* History styling */
+.controls button:active {
+    transform: scale(0.98);
+}
+
+/* History Section */
 .history {
-    max-height: 550px;
+    max-height: 600px;
     display: flex;
     flex-direction: column;
 }
 
-#history-header {
-    font-size: 1.25rem;
+.history-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
-    text-align: left;
 }
 
+#history-header {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+/* History List & Scrollbar */
 #history-list {
     list-style: none;
     overflow-y: auto;
-    padding-right: 10px;
+    padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
+#history-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+#history-list::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+/* History Items */
 .history-item {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     padding: 1rem;
-    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: left;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    transition: all 0.2s ease;
 }
 
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-mode {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.item-time {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Action Buttons */
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.delete-btn {
+    background: rgba(232, 93, 117, 0.1);
+    color: var(--accent);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: all 0.2s ease;
+    line-height: 0;
+    padding-bottom: 2px;
+}
+
+.history-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Responsive */
 @media (max-width: 850px) {
     .dashboard {
         grid-template-columns: 1fr;
+        padding-top: 2vh;
+    }
+
+    #timer {
+        font-size: 4.5rem;
     }
 }
