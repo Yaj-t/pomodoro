@@ -44,10 +44,10 @@ body {
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: 3rem 1.5rem;
+    padding: 3rem 0rem;
     text-align: center;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    height: 600px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
 }
